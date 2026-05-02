@@ -21,19 +21,29 @@ public:
     // The stack holds the PC value when the CALL instruction was executed, and the RETURN statement pulls that address from the stack and puts it back into the PC so the CPU
     // will execute it on the next cycle
     // Stack methods : push and pop, put onto te stack and pull off the stack, LIFO
-    uint16_t stack{};
+    uint16_t stack[16]{};
 
     // 8 bit stack pointer. just an index to the array of the stack
     // PC starts off pointing to the next instruction. PC is at $200, CALL $208 is at $200, so the SP increments by 1, PC increments by two since instructions are two bytes
-    //
     uint8_t sp{};
 
-    //
+    // delay timer is useed to time game events.
+    // If it is loaded with a value, it will decrement at a rate of 60Hz
     uint8_t delayTimer{};
+
+    // Emits a sound if non zero
     uint8_t soundTimer{};
+
+    // 16 input keys that match the first 16 hex values 0 through F
     uint8_t keypad[16]{};
+
+    // Monochrome display memory buffer used for storing the graphis to display, either on or off so two colors are possible
     uint32_t video[64 * 32]{};
+
+    // opcode
     uint16_t opcode;
+
+    void LoadROM(char const *filename);
 };
 
 int main()
