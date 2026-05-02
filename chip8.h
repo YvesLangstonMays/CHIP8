@@ -1,4 +1,6 @@
 #include <cstdint>
+#include <random>
+#pragma once
 
 class Chip8
 {
@@ -44,9 +46,34 @@ public:
     uint16_t opcode;
 
     void LoadROM(char const *filename);
+
+    std::default_random_engine randGen;
+    std::uniform_int_distribution<uint8_t> randByte;
 };
 
-int main()
+void Chip8::LoadROM(char const *filename)
 {
-    return 0;
+    // opens binary and goes to end of file. This avoids using seekg later.
+    ifstream file(filename, ios::binary | ios::ate);
+
+    if (file.is_open())
+    {
+        // new streampos object, size, holds the size of the file
+        streampos size = file.tellg();
+
+        // new pointer to a buffer that is a char array the same size of the file
+        char *buffer = new char[size];
+
+        // Move head to the beginning, read the file into the buffer and close the file
+        file.seekg(0, ios::beg);
+        file.read(buffer, size);
+        file.close();
+
+        for (long i = 0; i < size; i++)
+        {
+            memory[START_ADDRESS + i] = buffer[i];
+        }
+
+        delete[] buffer;
+    }
 }
