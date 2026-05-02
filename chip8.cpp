@@ -13,7 +13,15 @@ void Chip8::LoadROM(char const *filename)
 
     if (file.is_open())
     {
+        // new streampos object, size, holds the size of the file
         streampos size = file.tellg();
+
+        // new pointer to a buffer that is a char array the same size of the file
         char *buffer = new char[size];
+
+        // Move head to the beginning, read the file into the buffer and close the file
+        file.seekg(0, ios::beg);
+        file.read(buffer, size);
+        file.close();
     }
 }
