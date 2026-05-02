@@ -20,8 +20,15 @@ public:
     // When the program reaches anothe instruction RET, it has to go back to where it hit the CALL instruction
     // The stack holds the PC value when the CALL instruction was executed, and the RETURN statement pulls that address from the stack and puts it back into the PC so the CPU
     // will execute it on the next cycle
+    // Stack methods : push and pop, put onto te stack and pull off the stack, LIFO
     uint16_t stack{};
+
+    // 8 bit stack pointer. just an index to the array of the stack
+    // PC starts off pointing to the next instruction. PC is at $200, CALL $208 is at $200, so the SP increments by 1, PC increments by two since instructions are two bytes
+    //
     uint8_t sp{};
+
+    //
     uint8_t delayTimer{};
     uint8_t soundTimer{};
     uint8_t keypad[16]{};
