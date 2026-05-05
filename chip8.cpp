@@ -54,3 +54,9 @@ Chip8::Chip8()
     // uniform -> every number in the range has equal chance, int dist -> produces whole numbers
     randByte = std::uniform_int_distribution<uint8_t>(0, 255U);
 }
+
+void Chip8::OP_00E0()
+{
+    // clearing the screen by setting everything to zeroes in the buffer
+    memset(video, 0, sizeof(video));
+}

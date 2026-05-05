@@ -45,6 +45,9 @@ public:
     // opcode
     uint16_t opcode;
 
+    // CLS instruction that clears the screen
+    void OP_00E0();
+
     void LoadROM(char const *filename);
 
     std::default_random_engine randGen;
