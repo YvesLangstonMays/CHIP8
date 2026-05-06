@@ -48,6 +48,9 @@ public:
     // CLS instruction that clears the screen
     void OP_00E0();
 
+    // RET return from a subroutine
+    void OP_00EE();
+
     void LoadROM(char const *filename);
 
     std::default_random_engine randGen;
