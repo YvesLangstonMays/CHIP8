@@ -54,9 +54,44 @@ Chip8::Chip8()
     // uniform -> every number in the range has equal chance, int dist -> produces whole numbers
     randByte = std::uniform_int_distribution<uint8_t>(0, 255U);
 }
+/*
+=================================CHIP8 Op Codes & Bit Masking=================================
+First digit of a 16bit opcode identifies the instruction, last three identify the location
+0x1nnn = jump
+0x2nnn = call
+0x3xkk = skip where x is the register and kk is the value to compare
+0x6xkk = load where x is the register and kk is the value to load
 
+Jump:
+    0x1234 & 0x0FFF
+->  0001 0010 0011 0100
+    0000 1111 1111 1111
+=   0000 0010 0011 0100 = 1234 <- The address to jump to
+
+Call:
+    Same as above
+
+Skip:
+    0x3A42 & 0x0F00u >> 8u, Register Vx
+    0x3A42 & 0x00FFu, value to compare
+Load:
+    Same as above
+
+*/
 void Chip8::OP_00E0()
 {
     // clearing the screen by setting everything to zeroes in the buffer
     memset(video, 0, sizeof(video));
+}
+
+void Chip8::OP_00EE()
+{
+    --sp;           // decrement the stack pointer
+    pc = stack[sp]; // set the program counter to the new location in the stack
+}
+
+void Chip8::OP_1nnn()
+{
+    uint16_t address = opcode & 0x0FFFu; // mask first bit
+    pc = address;
 }

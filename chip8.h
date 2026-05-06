@@ -51,6 +51,9 @@ public:
     // RET return from a subroutine
     void OP_00EE();
 
+    // 1nnn: JP addr, jump to location nnn, set the pc to nnn
+    void OP_1nnn();
+
     void LoadROM(char const *filename);
 
     std::default_random_engine randGen;
