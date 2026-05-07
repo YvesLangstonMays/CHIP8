@@ -92,6 +92,64 @@ void Chip8::OP_00EE()
 
 void Chip8::OP_1nnn()
 {
-    uint16_t address = opcode & 0x0FFFu; // mask first bit
+    uint16_t address = opcode & 0x0FFFu; // mask first bit for address
     pc = address;
+}
+
+void Chip8::OP_2nnn()
+{
+    uint16_t address = opcode & 0x0FFFu;
+    stack[sp] = pc;
+    ++sp;
+    pc = address;
+}
+
+void Chip8::OP_3xkk()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8;
+    uint8_t byte = (opcode & 0xFFu);
+
+    if (registers[Vx] == byte)
+    {
+        pc += 2;
+    }
+}
+
+void Chip8::OP_4xkk()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8;
+    uint8_t byte = opcode & 0x0F00u;
+
+    if (registers[Vx] != byte)
+    {
+        pc += 2;
+    }
+}
+
+void Chip8::OP_5xy0()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+
+    if (registers[Vx] == registers[Vy])
+    {
+        pc += 2;
+    }
+}
+
+void Chip8::OP_6xkk()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t byte = opcode & 0x00FFu;
+
+    registers[Vx] = byte;
+}
+
+// set Vx = Vx + Kk
+void Chip8::OP_7xkk()
+{
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint8_t byte = opcode & 0x00Fu;
+
+    registers[Vx] += byte;
 }

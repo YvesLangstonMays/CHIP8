@@ -54,6 +54,23 @@ public:
     // 1nnn: JP addr, jump to location nnn, set the pc to nnn
     void OP_1nnn();
 
+    // 2nnn: CALL addr, call subroutine at nnn
+    void OP_2nnn();
+
+    // 3xkk: Skipp next instruction if Vx = kk, register equls byte
+    void OP_3xkk();
+
+    // Skip next instruction if Vx != kk
+    void OP_4xkk();
+
+    // Skip next instruction if Vx = Vy
+    void OP_5xy0();
+
+    // Set Vx to kk
+    void OP_6xkk();
+
+    void OP_7xkk();
+
     void LoadROM(char const *filename);
 
     std::default_random_engine randGen;
