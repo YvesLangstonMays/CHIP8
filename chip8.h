@@ -69,6 +69,7 @@ public:
     // Set Vx to kk
     void OP_6xkk();
 
+    // Add Vx, byte
     void OP_7xkk();
 
     void LoadROM(char const *filename);
